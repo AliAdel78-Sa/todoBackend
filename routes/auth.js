@@ -14,6 +14,10 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
+router.get("/hello", (res, req) => {
+	res.status(200).send("API SUCCESSFULLY RELOADED!!");
+});
+
 // Signup
 router.post("/signup", async (req, res) => {
 	const { email, password } = req.body;
