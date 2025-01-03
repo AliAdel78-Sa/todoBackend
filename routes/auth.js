@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
 		const confirmationToken = crypto.randomBytes(32).toString("hex");
 		const newUser = new User({ ...req.body, confirmationToken });
 		await newUser.save();
-		const confirmationUrl = `http://localhost:5000/api/auth/confirm-email?token=${confirmationToken}&email=${encodeURIComponent(
+		const confirmationUrl = `https://todo-backend-eight-weld.vercel.app/api/auth/confirm-email?token=${confirmationToken}&email=${encodeURIComponent(
 			email
 		)}`;
 		const mailOptions = {
