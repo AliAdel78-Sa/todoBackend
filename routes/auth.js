@@ -14,10 +14,6 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-router.get("/hello", (req, res) => {
-	res.send({ messege: "API SUCCESSFULLY RELOADED!!" });
-});
-
 // Signup
 router.post("/signup", async (req, res) => {
 	const { email, password } = req.body;
@@ -32,7 +28,7 @@ router.post("/signup", async (req, res) => {
 		const confirmationToken = crypto.randomBytes(32).toString("hex");
 		const newUser = new User({ ...req.body, confirmationToken });
 		await newUser.save();
-		const confirmationUrl = `https://todo-backend-eight-weld.vercel.app/api/auth/confirm-email?token=${confirmationToken}&email=${encodeURIComponent(
+		const confirmationUrl = `http://192.168.1.100:5000/api/auth/confirm-email?token=${confirmationToken}&email=${encodeURIComponent(
 			email
 		)}`;
 		const mailOptions = {
@@ -75,10 +71,10 @@ router.get("/confirm-email", async (req, res) => {
 });
 
 // Get User
-router.post("/user", async (req, res) => {
-	const { token } = req.body;
+router.get("/user/:token", async (req, res) => {
+	const { token } = req.params;
 	try {
-		const user = await User.findOne({ token });
+		const user = await User.findOne({ token: token });
 		if (user) {
 			res.status(200).send(user);
 		}
@@ -89,11 +85,11 @@ router.post("/user", async (req, res) => {
 
 // Save User Data
 router.post("/save", async (req, res) => {
-	const { token, lists } = req.body;
+	const { token, userData } = req.body;
 	try {
 		const user = await User.findOne({ token: token });
 		if (user) {
-			user.lists = lists;
+			user.userData = userData;
 			await user.save();
 			res.status(200).json({
 				messege: "User Updated Successfully",

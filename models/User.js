@@ -6,11 +6,12 @@ const userSchema = new mongoose.Schema({
 	password: { type: String, required: true, unique: false },
 	firstName: { type: String, required: true, unique: false },
 	lastName: { type: String, required: true, unique: false },
-	lists: { type: Array, required: false, default: [] },
-	settings: { type: mongoose.Schema.Types.Mixed, default: { test: "value" } },
 	verified: { type: Boolean, default: false },
 	confirmationToken: { type: String },
 	token: { type: String, default: null },
+	userData: {
+		lists: { type: Array, required: false, default: [] },
+	},
 });
 
 // Hash password before saving
