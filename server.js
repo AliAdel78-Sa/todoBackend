@@ -12,7 +12,7 @@ connectDB();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views")); // Ensure this points to your views directory
 // Middleware
-app.use(cors());
+app.use(cors({ origin: "http://127.0.0.1:5500" }));
 app.use(bodyParser.json());
 
 // Routes
