@@ -146,7 +146,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-	res.render("home");
+	res.json("Hello");
 });
 
 const PORT = process.env.PORT || 5000;
