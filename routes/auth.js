@@ -4,7 +4,11 @@ const User = require("../models/User");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const router = express.Router();
+const https = require("https");
 const path = require("path");
+const fs = require("fs");
+
+
 // Email Transporter
 const transporter = nodemailer.createTransport({
 	service: "Gmail", // Use your email provider
@@ -42,7 +46,7 @@ router.post("/signup", async (req, res) => {
 
 		res.status(201).json({
 			message:
-				"User registered. Please check your email to confirm your account.",
+				"User registered Successfully, Please check your email to confirm your account.",
 		});
 	} catch (error) {
 		res.status(500).json({ message: "Server error", error: error });
@@ -77,6 +81,8 @@ router.get("/user/:token", async (req, res) => {
 		const user = await User.findOne({ token: token });
 		if (user) {
 			res.status(200).send(user);
+		} else {
+			res.status(200).send({ message: "User Not Found" });
 		}
 	} catch (e) {
 		res.status(500).send({ message: "Server Error", error: e });
